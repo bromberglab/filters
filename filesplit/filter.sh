@@ -26,3 +26,4 @@ do
 done
 
 $failed && echo "Failure." && exit 1
+exit 0
