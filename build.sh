@@ -1,7 +1,10 @@
-find . -type d -depth 1 | while read filter
+ls -1 | while read filter
 do
-    cd "$filter"
-    docker build -t "gcr.io/$GKE_PROJECT/filters/$filter"
-    docker push "gcr.io/$GKE_PROJECT/filters/$filter"
-    cd ..
+    if [ -d "$filter" ]
+    then
+        cd "$filter"
+        docker build -t "gcr.io/$GKE_PROJECT/filters/$filter"
+        docker push "gcr.io/$GKE_PROJECT/filters/$filter"
+        cd ..
+    fi
 done
