@@ -82,9 +82,13 @@ get_output() {
 run() {
     echo "run:"
 
+    m=$((m+1))
+    l=0
     echo "$1" | while read k
     do
-        echo "> $k"
+        l=$((l+1))
+        mkdir -p "/output/$l/$m"
+        cp -r "/input/$l/$k/*" "/output/$l/$m/"
     done
 }
 
@@ -136,6 +140,7 @@ main() {
 }
 
 failed=false
+m=0
 
 main || failed=true
 
