@@ -80,19 +80,17 @@ get_output() {
 }
 
 run() {
-    pre="$1"
-
     echo "run:"
 
-    echo "$pre" | while read j
+    echo "$1" | while read k
     do
-        echo "> $j"
+        echo "> $k"
     done
 }
 
 run_on() {
-    num="$1"
-    pre="$2"
+    local num="$1"
+    local pre="$2"
 
     if [ "$num" -eq 0 ]
     then
