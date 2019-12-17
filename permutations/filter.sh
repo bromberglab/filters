@@ -80,16 +80,15 @@ get_output() {
 }
 
 run() {
-    echo "run:"
+    m="$(echo "$1" | while read k; do printf "$k."; done)" # " # <- fixes wrong highlighting.
+    m="${m%?}"
 
-    m=$((m+1))
     l=0
     echo "$1" | while read k
     do
         l=$((l+1))
         mkdir -p "/output/$l/"
         cp -r "/input/$l/$k" "/output/$l/$m"
-        echo cp -r "/input/$l/$k" "/output/$l/$m"
     done
 }
 
@@ -141,7 +140,6 @@ main() {
 }
 
 failed=false
-m=0
 
 main || failed=true
 
