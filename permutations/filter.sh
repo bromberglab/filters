@@ -79,17 +79,66 @@ get_output() {
     eval echo \"\${"$n"}\"
 }
 
+run() {
+    pre="$1"
+
+    echo "run:"
+
+    echo "$pre" | while read j
+    do
+        echo "> $j"
+    done
+}
+
+run_on() {
+    num="$1"
+    pre="$2"
+
+    if [ "$num" -eq 0 ]
+    then
+        run "$pre" || return 1
+    fi
+
+    ls -1 "/input/$num" | while read j
+    do
+        run_on $((num-1)) "$(echo "$j"; echo "$pre")" || return 1
+    done
+}
+
+main() {
+    inputs_meta="${INPUTS_META:-}"
+    outputs_meta="${OUTPUTS_META:-}"
+
+    if ! [ "$(count_len ';' "$inputs_meta")" -eq "$(count_len ';' "$outputs_meta")" ]
+    then
+        echo "Number of inputs must match number of outputs."
+        failed=true
+        return 1
+    fi
+    if [ "$(count_len ';' "$inputs_meta")" -eq 1 ]
+    then
+        cp -r /input/* /output/
+        return 0
+    fi
+    # ls -1 /input | while read f
+    # do
+    #     ls -1 "$f" | while read j
+    #     do
+    #         if echo "$j" | grep ';'
+    #         then
+    #             echo "Job contains ';': $j."
+    #             failed=true
+    #             return 1
+    #         fi
+    #     done || return 1
+    # done || return 1
+
+    run_on "$(ls -1 /input | wc -l)" "" || return 1
+}
+
 failed=false
 
-
-inputs_meta="${INPUTS_META:-}"
-outputs_meta="${OUTPUTS_META:-}"
-
-if ! [ "$(count_len ';' "$inputs_meta")" -eq "$(count_len ';' "$outputs_meta")" ]
-then
-    failed=true
-    echo "Number of inputs must match number of outputs."
-fi
+main || failed=true
 
 $failed && echo "Failure." && exit 1
-exit 0
+echo "Done."
