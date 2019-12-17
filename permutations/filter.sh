@@ -89,6 +89,7 @@ run() {
         l=$((l+1))
         mkdir -p "/output/$l/"
         cp -r "/input/$l/$k" "/output/$l/$m"
+        echo cp -r "/input/$l/$k" "/output/$l/$m"
     done
 }
 
