@@ -95,6 +95,7 @@ run_on() {
     if [ "$num" -eq 0 ]
     then
         run "$pre" || return 1
+        return 0
     fi
 
     ls -1 "/input/$num" | while read j
