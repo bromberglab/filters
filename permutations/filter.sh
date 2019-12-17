@@ -87,8 +87,8 @@ run() {
     echo "$1" | while read k
     do
         l=$((l+1))
-        mkdir -p "/output/$l/$m"
-        cp -r "/input/$l/$k/*" "/output/$l/$m/"
+        mkdir -p "/output/$l/"
+        cp -r "/input/$l/$k" "/output/$l/$m"
     done
 }
 
