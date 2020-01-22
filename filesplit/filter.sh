@@ -16,7 +16,7 @@ do
 
         filename="$(ls -1 "/input/$job")"
 
-        cat "/input/$job/$filename" | while read line
+        cat "/input/$job/$filename" | sed -e '$a\' | head -n -1 | while read line
         do
             i=$((i+1))
             mkdir -p "/output/$i.$job"
