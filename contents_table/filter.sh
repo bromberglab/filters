@@ -9,7 +9,8 @@ do
     then
         ls -1 "/input/$job" | while read filename
         do
-            echo "$job;$filename;$(cat "/input/$job/$filename")" >> /output/table.csv
+            mkdir /output/csv.job
+            echo "$job;$filename;$(cat "/input/$job/$filename")" >> /output/csv.job/table.csv
         done
     fi
 done
