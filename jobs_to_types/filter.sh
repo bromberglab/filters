@@ -102,7 +102,7 @@ main() {
 
     if [ "$(count_len ' ' "$param")" -gt 1 ]
     then
-        if [ "$("$param" "1" " ")" = "--override-job-name" ]
+        if [ "$(get_any "$param" "1" " ")" = "--override-job-name" ]
         then
             overridejobname="${param:20}"
         fi
