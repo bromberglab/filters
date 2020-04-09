@@ -101,7 +101,7 @@ main() {
     ls -1 /input | while read f
     do
         i=$((i+1))
-        cp -r "/input/$f" /outputs/$i
+        cp -r "/input/$f" /output/$i
     done
 }
 
