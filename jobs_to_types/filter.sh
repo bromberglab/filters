@@ -51,6 +51,21 @@ get_input() {
     eval echo \"\${"$n"}\"
 }
 
+get_any() {
+    inputs="$1"
+    n="$2"
+    delim="$3"
+
+    oIFS="$IFS"
+    IFS="$delim"
+    set -o noglob
+    set -- $inputs
+    set +o noglob
+    IFS="$oIFS"
+
+    eval echo \"\${"$n"}\"
+}
+
 get_from_output() {
     output="$1"
     n="$2"
@@ -83,6 +98,15 @@ get_output() {
 main() {
     inputs_meta="${INPUTS_META:-}"
     outputs_meta="${OUTPUTS_META:-}"
+    param="${ADD_PARAMETERS:-}"
+
+    if [ "$(count_len ' ' "$param")" -gt 1 ]
+    then
+        if [ "$("$param" "1" " ")" = "--override-job-name" ]
+        then
+            overridejobname="${param:20}"
+        fi
+    fi
 
     if ! [ "$(count_len ';' "$outputs_meta")" -eq "$(ls -1 /input/ | wc -l)" ]
     then
@@ -101,7 +125,7 @@ main() {
     ls -1 /input | while read f
     do
         i=$((i+1))
-        cp -r "/input/$f" /output/$i
+        cp -r "/input/$f" "/output/$i/${overridejobname:-}"
     done
 }
 

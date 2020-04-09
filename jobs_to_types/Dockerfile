@@ -5,7 +5,8 @@ LABEL bio-node="v1" \
     bio-node_entrypoint=false \
     input="*" \
     output_n="*" \
-    parallelism=0
+    parallelism=0 \
+    parameters='--override-job-name myjob'
 
 ADD filter.sh /
 
