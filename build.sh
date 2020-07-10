@@ -5,8 +5,8 @@ do
     if [ -d "$filter" ]
     then
         cd "$filter"
-        docker build -t "bromberglab/bio-node-filters/$filter" .
-        docker push "bromberglab/bio-node-filters/$filter"
+        docker build -t "bromberglab/bio-node-filter.$filter" .
+        docker push "bromberglab/bio-node-filter.$filter"
         cd ..
     fi
 done
